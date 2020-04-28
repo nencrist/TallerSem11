@@ -18,6 +18,8 @@ public class Main extends PApplet{
 	private ArrayList<X> xArray;
 	//variables jugada
 	private Jugada jugar;
+	//variables alerta jugada
+	private JugadaAlerta alerta1, alerta2, alerta3, alerta4, alerta5, alerta6, alerta7, alerta8, alerta9;
 	
 	
 	public static void main(String[] args) {
@@ -44,6 +46,16 @@ public class Main extends PApplet{
 		xArray = new ArrayList<X> ();
 		//inicializacion jugada
 		jugar = new Jugada(this);
+		//inicializacion alertas
+		alerta1 = new JugadaAlerta(1);
+		alerta2 = new JugadaAlerta(2);
+		alerta3 = new JugadaAlerta(3);
+		alerta4 = new JugadaAlerta(4);
+		alerta5 = new JugadaAlerta(5);
+		alerta6 = new JugadaAlerta(6);
+		alerta7 = new JugadaAlerta(7);
+		alerta8 = new JugadaAlerta(8);
+		alerta9 = new JugadaAlerta(9);
 		
 		//hilo recepcion udp
 		new Thread(
@@ -51,7 +63,7 @@ public class Main extends PApplet{
 				() -> {
 					try {
 						android = InetAddress.getByName("192.168.0.5");
-						socket = new DatagramSocket (5000);
+						socket = new DatagramSocket (8000);
 						
 						while(true) {
 							byte[] buffer = new byte[100];
@@ -113,7 +125,9 @@ public class Main extends PApplet{
 			xArray.add(x);
 			jugar.setTurno(2);
 			Gson gson = new Gson();
-			String json = gson.
+			String json = gson.toJson(alerta1);
+			enviarMensaje(json);
+			System.out.println(json);
 			}
 		}
 		//rect2
@@ -190,7 +204,7 @@ public class Main extends PApplet{
 	
 					try {
 						byte[] buffer = mensaje.getBytes();
-						DatagramPacket packet = new DatagramPacket(buffer, buffer.length, android, 5000);
+						DatagramPacket packet = new DatagramPacket(buffer, buffer.length, android, 8000);
 						socket.send(packet);
 					} catch (IOException e) {
 						// TODO Auto-generated catch block
